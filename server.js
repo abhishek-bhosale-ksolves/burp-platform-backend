@@ -12,12 +12,13 @@ require("./config/passport")(passport);
 connectDB();
 
 // Middleware
-app.use(
-  cors({
-    origin: "https://burp-ksolves.netlify.app",
-    credentials: true,
-  })
-);
+// app.use(
+//   cors({
+//     origin: "https://burp-ksolves.netlify.app",
+//     credentials: true,
+//   })
+// );
+app.use(cors());
 
 app.use(express.json());
 
