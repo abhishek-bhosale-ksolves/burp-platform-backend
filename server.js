@@ -19,14 +19,6 @@ app.use(
   })
 );
 
-app.options(
-  "*",
-  cors({
-    origin: "https://burp-ksolves.netlify.app",
-    credentials: true,
-  })
-);
-
 app.use(express.json());
 
 app.use(
