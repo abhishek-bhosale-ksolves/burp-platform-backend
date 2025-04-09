@@ -72,6 +72,10 @@ app.get("/api/logout", (req, res) => {
   });
 });
 
+// Import routes
+const positionRoute = require("./routes/positionRoute");
+app.use("/api/positions", positionRoute);
+
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
