@@ -19,6 +19,16 @@ app.use(
   })
 );
 
+app.options(
+  "*",
+  cors({
+    origin: "https://burp-ksolves.netlify.app",
+    credentials: true,
+  })
+);
+
+app.use(express.json());
+
 app.use(
   session({
     secret: "my_secret_key",
@@ -64,7 +74,6 @@ app.get("/api/logout", (req, res) => {
 
 // Position routes
 const positionRoute = require("./routes/positionRoute");
-app.use(express.json());
 app.use("/api/positions", positionRoute);
 
 app.listen(port, () => {
