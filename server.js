@@ -1,28 +1,29 @@
 const express = require("express");
-const connectDB = require("./config/dbconnection");
-const port = 5000;
-const app = express();
-require("dotenv").config();
-const passport = require("passport");
 const session = require("express-session");
+const passport = require("passport");
 const cors = require("cors");
-require("./config/passport")(passport);
+const dotenv = require("dotenv");
 
-// Database connection
+// Configs
+const connectDB = require("./config/dbconnection");
+require("./config/passport")(passport);
+dotenv.config();
+
+// Routes
+const positionRoute = require("./routes/positionRoute");
+const referralRoute = require("./routes/referralRoute");
+const authRoute = require("./routes/authRoute");
+
+const app = express();
+const port = 5000;
+
+// Connect to database
 connectDB();
 
 // Middleware
-const allowedOrigins = ["https://burp-ksolves.netlify.app"];
-
 app.use(
   cors({
-    origin: function (origin, callback) {
-      if (allowedOrigins.includes(origin)) {
-        callback(null, true);
-      } else {
-        callback(new Error("Not allowed by CORS"));
-      }
-    },
+    origin: ["http://localhost:5173", "https://burp-ksolves.netlify.app"],
     credentials: true,
   })
 );
@@ -35,8 +36,7 @@ app.use(
     resave: false,
     saveUninitialized: false,
     cookie: {
-      secure: true,
-      sameSite: "None",
+      secure: false,
     },
   })
 );
@@ -45,37 +45,11 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 // Routes
-app.get(
-  "/auth/google",
-  passport.authenticate("google", { scope: ["profile", "email"] })
-);
-
-app.get(
-  "/auth/google/callback",
-  passport.authenticate("google", {
-    successRedirect: "https://burp-ksolves.netlify.app",
-    failureRedirect: "https://burp-ksolves.netlify.app",
-  })
-);
-
-app.get("/api/user", (req, res) => {
-  if (req.isAuthenticated()) {
-    res.json({ user: req.user });
-  } else {
-    res.status(401).json({ message: "Not authenticated" });
-  }
-});
-
-app.get("/api/logout", (req, res) => {
-  req.logout(() => {
-    res.json({ message: "Logged out" });
-  });
-});
-
-// Import routes
-const positionRoute = require("./routes/positionRoute");
 app.use("/api/positions", positionRoute);
+app.use("/api/referrals", referralRoute);
+app.use("/auth", authRoute);
 
+// Start server
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });

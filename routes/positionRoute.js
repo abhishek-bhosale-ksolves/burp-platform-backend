@@ -6,6 +6,9 @@ const Position = require("../models/Position");
 
 // Create a new position
 router.post("/", async (req, res) => {
+  if (!req.isAuthenticated()) {
+    return res.status(401).json({ message: "Unauthorized" });
+  }
   const { title, description, location, experience } = req.body;
   try {
     const newPosition = new Position({
@@ -23,6 +26,9 @@ router.post("/", async (req, res) => {
 
 // Get all positions
 router.get("/", async (req, res) => {
+  if (!req.isAuthenticated()) {
+    return res.status(401).json({ message: "Unauthorized" });
+  }
   try {
     const positions = await Position.find();
     res.status(200).json(positions);

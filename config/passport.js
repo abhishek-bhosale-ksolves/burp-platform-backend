@@ -13,8 +13,6 @@ module.exports = function (passport) {
         try {
           let user = await User.findOne({ googleId: profile.id });
 
-          console.log("Google profile:", profile);
-
           if (!user) {
             user = await User.create({
               googleId: profile.id,
