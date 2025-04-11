@@ -13,6 +13,7 @@ dotenv.config();
 const positionRoute = require("./routes/positionRoute");
 const referralRoute = require("./routes/referralRoute");
 const authRoute = require("./routes/authRoute");
+const requestRoute = require("./routes/requestRoute");
 
 const app = express();
 const port = 5000;
@@ -37,6 +38,7 @@ app.use(
     saveUninitialized: false,
     cookie: {
       secure: false,
+      maxAge: 24 * 60 * 60 * 1000,
     },
   })
 );
@@ -48,6 +50,8 @@ app.use(passport.session());
 app.use("/api/positions", positionRoute);
 app.use("/api/referrals", referralRoute);
 app.use("/auth", authRoute);
+app.use("/api/users/request", requestRoute);
+app.use("/api/users", require("./routes/usersRoute"));
 
 // Start server
 app.listen(port, () => {

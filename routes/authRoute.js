@@ -10,8 +10,8 @@ router.get(
 router.get(
   "/google/callback",
   passport.authenticate("google", {
-    successRedirect: "https://burp-ksolves.netlify.app",
-    failureRedirect: "https://burp-ksolves.netlify.app",
+    successRedirect: "http://localhost:5173",
+    failureRedirect: "http://localhost:5173",
   })
 );
 
@@ -19,7 +19,7 @@ router.get("/api/user", (req, res) => {
   if (req.isAuthenticated()) {
     res.json({ user: req.user });
   } else {
-    res.status(401).json({ message: "Not authenticated" });
+    res.status(204).json({ message: "Not authenticated" });
   }
 });
 
