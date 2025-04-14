@@ -42,6 +42,7 @@ app.use(
       httpOnly: true,
       sameSite: "None",
       secure: true,
+      domain: "burp-platform-backend.onrender.com",
       maxAge: 24 * 60 * 60 * 1000,
     },
   })
