@@ -18,8 +18,6 @@ router.get(
 router.get("/api/user", (req, res) => {
   if (req.isAuthenticated()) {
     res.json({ user: req.user });
-  } else {
-    res.status(204).json({ message: "Not authenticated" });
   }
 });
 
