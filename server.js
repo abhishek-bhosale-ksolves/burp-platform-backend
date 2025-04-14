@@ -24,8 +24,9 @@ connectDB();
 // Middleware
 app.use(
   cors({
-    origin: ["https://burp-ksolves.netlify.app"],
+    origin: "https://burp-ksolves.netlify.app",
     credentials: true,
+    secure: true,
     sameSite: "None",
   })
 );
