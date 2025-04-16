@@ -26,8 +26,6 @@ app.use(
   cors({
     origin: "https://burp-ksolves.netlify.app",
     credentials: true,
-    secure: true,
-    sameSite: "None",
   })
 );
 
@@ -40,8 +38,8 @@ app.use(
     saveUninitialized: false,
     cookie: {
       httpOnly: true,
-      sameSite: "None",
       secure: true,
+      sameSite: "None",
       domain: "burp-platform-backend.onrender.com",
       maxAge: 24 * 60 * 60 * 1000,
     },
