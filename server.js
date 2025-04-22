@@ -37,6 +37,10 @@ app.use(
     secret: "my_secret_key",
     resave: false,
     saveUninitialized: false,
+    cookie: {
+      secure: true, // only for HTTPS
+      sameSite: "None", // allows cross-site
+    },
   })
 );
 
